@@ -1,0 +1,10 @@
+@import "../node_modules/bootstrap/dist/css/bootstrap.css";
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}

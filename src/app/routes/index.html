@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div *ngFor="let game of games$ | async" class="col-3">
+      <div class="card mb-3">
+        <!-- <img src="..." class="card-img-top" alt="..." /> -->
+        <div class="card-body">
+          <h6 class="card-title">{{game.title}}</h6>
+          <div>
+            <ul class="d-flex flex-wrap">
+              <li *ngFor="let platform of game.platforms">
+                <span class="badge rounded-pill text-bg-light">
+                  {{platform}}
+                </span>
+              </li>
+            </ul>
+          </div>
+          <p class="card-text"></p>
+          <a href="#" class="btn btn-sm btn-primary">Read more</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
