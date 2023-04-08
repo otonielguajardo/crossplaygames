@@ -13,7 +13,7 @@ export class GameService {
 
 	public getGames(): void {
 		this.httpClient
-			.get(`http://localhost:5173/api/games`)
+			.get(`${process.env['BASE_URL']}/api/games`)
 			.subscribe({
 				next: ({ data }: any) => {
 					this.games$.next(data);
