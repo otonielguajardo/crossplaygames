@@ -39,8 +39,9 @@ const scrapWikipedia = async () => {
 				platforms += $(column).text().trim() + ',';
 			};
 		});
+
 		// discriminate platforms
-		platforms = platforms.replace(/Vita|PS3|PS4|PS5|XboxCloudGaming|WiiU|/gi, '');
+		platforms = platforms.replace(/Vita|PS3|PS4|PS5|Xbox Cloud Gaming|Wii U|XB360/gi, '');
 		// group PC launchers
 		platforms = platforms.replace(/Steam|Epic|Origin|MS|GFWL|GOG|Battle.net|Other/gi, 'PC');
 		// rename xbox series 
@@ -52,7 +53,7 @@ const scrapWikipedia = async () => {
 		platforms = [...new Set(platforms)];
 
 		if (platforms.length <= 1) return;
-
+		
 		games.push({
 			title,
 			platforms
