@@ -1,84 +1,96 @@
-<div class="container">
-  <div class="row mb-3 mt-3 gx-3">
-    <div class="col">
-      <select
-        class="form-control form-control-sm"
-        [(ngModel)]="queryParams.platformA"
-        (change)="applyFilter()"
-      >
-        <option *ngFor="let platform of platforms$ | async" [value]="platform">
-          {{platform || 'All platforms'}}
-        </option>
-      </select>
+<div id="header" class="sticky">
+  <div class="container">
+    <div class="row mb-3 mt-3 gx-3">
+      <div class="col">
+        <select
+          class="form-control form-control-sm"
+          [(ngModel)]="queryParams.platformA"
+          (change)="applyFilter()"
+        >
+          <option
+            *ngFor="let platform of platforms$ | async"
+            [value]="platform"
+          >
+            {{platform || 'All platforms'}}
+          </option>
+        </select>
+      </div>
+      <div class="col">
+        <select
+          class="form-control form-control-sm"
+          [(ngModel)]="queryParams.platformB"
+          (change)="applyFilter()"
+        >
+          <option
+            *ngFor="let platform of platforms$ | async"
+            [value]="platform"
+          >
+            {{platform || 'All platforms'}}
+          </option>
+        </select>
+      </div>
+      <div class="col-3">
+        <select
+          class="form-control form-control-sm"
+          [(ngModel)]="queryParams.sortBy"
+          (change)="applyFilter()"
+        >
+          <option *ngFor="let sort of ['name','rating']" [value]="sort">
+            by {{sort}}
+          </option>
+        </select>
+      </div>
     </div>
-    <div class="col">
-      <select
-        class="form-control form-control-sm"
-        [(ngModel)]="queryParams.platformB"
-        (change)="applyFilter()"
-      >
-        <option *ngFor="let platform of platforms$ | async" [value]="platform">
-          {{platform || 'All platforms'}}
-        </option>
-      </select>
-    </div>
-    <div class="col-3">
-      <select
-        class="form-control form-control-sm"
-        [(ngModel)]="queryParams.sortBy"
-        (change)="applyFilter()"
-      >
-        <option *ngFor="let sort of ['name','rating']" [value]="sort">
-          by {{sort}}
-        </option>
-      </select>
+    <div class="row mb-3 mt-3 gx-3">
+      <div class="col">
+        <input
+          (search)="applyFilter()"
+          (keyup)="applyFilter()"
+          [(ngModel)]="queryParams.q"
+          type="search"
+          class="form-control form-control-sm"
+          placeholder="Search titles..."
+        />
+      </div>
     </div>
   </div>
-  <div class="row mb-3 mt-3 gx-3">
-    <div class="col">
-      <input
-        (search)="applyFilter()"
-        (keyup)="applyFilter()"
-        [(ngModel)]="queryParams.q"
-        type="search"
-        class="form-control form-control-sm"
-        placeholder="Search titles..."
-      />
-    </div>
-  </div>
-  <div class="row gx-3">
-    <div
-      *ngFor="let game of gamesFiltered$ | async"
-      class="col-md-4 col-sm-6 col-12"
-    >
-      <div class="card mb-3">
-        <div class="row g-0">
-          <div class="col" style="max-width: 70px">
-            <img
-              [src]="game.cover || '/placeholder.png'"
-              class="rounded-start cover"
-              [alt]="game.title"
-            />
-          </div>
-          <div class="col">
-            <div class="card-body p-2">
-              <h5 class="card-title mb-1">
-                <span> {{game.title}} </span>
-              </h5>
-              <div>
-                <ul class="d-flex flex-wrap">
-                  <li
-                    *ngFor="let platform of game.platforms"
-                    (click)="selectPlatform(platform)"
-                  >
-                    <span
-                      class="badge rounded-pill me-1 border"
-                      [ngClass]="selectedPlatform(platform) ? 'text-bg-danger border-danger' : 'text-bg-dark border-dark'"
+</div>
+<div id="main">
+  <div class="container">
+    <div class="row gx-3">
+      <div
+        *ngFor="let game of gamesFiltered$ | async"
+        class="col-md-4 col-sm-6 col-12"
+      >
+        <div class="card mb-3">
+          <div class="row g-0">
+            <div class="col" style="max-width: 70px">
+              <img
+                [src]="game.cover || '/placeholder.png'"
+                class="rounded-start cover"
+                [alt]="game.title"
+              />
+            </div>
+            <div class="col">
+              <div class="card-body p-2">
+                <h5 class="card-title mb-1">
+                  <span> {{game.title}} </span>
+                </h5>
+                <div>
+                  <ul class="d-flex flex-wrap">
+                    <li
+                      *ngFor="let platform of game.platforms"
+                      (click)="selectPlatform(platform)"
                     >
-                      {{platform}}
-                    </span>
-                  </li>
-                </ul>
+                      <span
+                        class="badge rounded-pill me-1 border"
+                        [ngClass]="selectedPlatform(platform) ? 'text-bg-danger border-danger' : 'text-bg-dark border-dark'"
+                      >
+                        {{platform}}
+                      </span>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
