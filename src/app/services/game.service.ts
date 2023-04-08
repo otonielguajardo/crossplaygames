@@ -1,35 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class GameService {
 
 	private games$ = new BehaviorSubject<any>([]);
 
-	// private get cachedGames() {
-	// 	const cachedGames = localStorage.getItem('games') as string;
-	// 	return JSON.parse(cachedGames) ?? [];
-	// }
-
-	// private set cachedGames(data) {
-	// 	if (data) localStorage.setItem('games', JSON.stringify(data));
-	// }
-
 	constructor(
 		private httpClient: HttpClient
 	) { }
 
 	public getGames(): void {
-		// this.games$.next(this.cachedGames);
-
 		this.httpClient
 			.get(`http://localhost:5173/api/games`)
 			.subscribe({
 				next: ({ data }: any) => {
-					// console.log(response);
 					this.games$.next(data);
-					// this.cachedGames = data;
 				},
 				error: (e) => {
 					console.error(e);
@@ -38,4 +25,28 @@ export class GameService {
 	}
 
 	public games(): Observable<any> { return this.games$; }
+
+	public gamesFiltered(platformA: string = '', platformB: string = ''): Observable<any> {
+		return this.games$.pipe(
+			map((games: any) => {
+				let gamesFiltered = games;
+				if (platformA !== '') {
+					gamesFiltered = gamesFiltered.filter((g: any) => g.platforms.includes(platformA))
+				};
+				if (platformB !== '') {
+					gamesFiltered = gamesFiltered.filter((g: any) => g.platforms.includes(platformB))
+				};
+				return gamesFiltered;
+			})
+		);
+	}
+
+	public platforms(): Observable<any> {
+		return this.games$.pipe(
+			map((games: any) => {
+				let patforms = games.map((game: any) => game.platforms).flat();
+				return ['', ...new Set(patforms)];
+			})
+		);
+	}
 }

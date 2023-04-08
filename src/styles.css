@@ -8,3 +8,14 @@ ul {
 li {
   list-style: none;
 }
+
+.badge {
+  cursor: pointer;
+  font-size: 10px;
+}
+
+img.cover {
+  width: 100%;
+  object-fit: cover;
+  height: 100%;
+}

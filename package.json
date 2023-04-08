@@ -11,7 +11,8 @@
     "start": "npm run dev",
     "build": "ng build",
     "watch": "ng build --watch",
-    "test": "ng test"
+    "test": "ng test",
+    "scraper": "node scraper.js"
   },
   "dependencies": {
     "@analogjs/router": "latest",

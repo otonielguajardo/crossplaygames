@@ -1,21 +1,59 @@
 <div class="container">
+  <div class="row mb-3 mt-3 gx-3">
+    <div class="col">
+      <select
+        class="form-control form-control-sm"
+        [(ngModel)]="queryParams.platformA"
+        (change)="applyPlatformFilter()"
+      >
+        <option *ngFor="let platform of platforms$ | async" [value]="platform">
+          {{platform}}
+        </option>
+      </select>
+    </div>
+    <div class="col">
+      <select
+        class="form-control form-control-sm"
+        [(ngModel)]="queryParams.platformB"
+        (change)="applyPlatformFilter()"
+      >
+        <option *ngFor="let platform of platforms$ | async" [value]="platform">
+          {{platform}}
+        </option>
+      </select>
+    </div>
+  </div>
   <div class="row">
-    <div *ngFor="let game of games$ | async" class="col-3">
+    <div *ngFor="let game of gamesFiltered$ | async" class="col-md-6 col-12">
       <div class="card mb-3">
-        <!-- <img src="..." class="card-img-top" alt="..." /> -->
-        <div class="card-body">
-          <h6 class="card-title">{{game.title}}</h6>
-          <div>
-            <ul class="d-flex flex-wrap">
-              <li *ngFor="let platform of game.platforms">
-                <span class="badge rounded-pill text-bg-light">
-                  {{platform}}
-                </span>
-              </li>
-            </ul>
+        <div class="row g-0">
+          <div class="col" style="max-width: 70px">
+            <img
+              [src]="game.cover || '/placeholder.png'"
+              class="rounded-start cover"
+              [alt]="game.title"
+            />
           </div>
-          <p class="card-text"></p>
-          <a href="#" class="btn btn-sm btn-primary">Read more</a>
+          <div class="col">
+            <div class="card-body p-2">
+              <h5 class="card-title mb-1">{{game.title}}</h5>
+              <div>
+                <ul class="d-flex flex-wrap">
+                  <li
+                    *ngFor="let platform of game.platforms"
+                    (click)="selectPlatform(platform)"
+                  >
+                    <span
+                      class="badge rounded-pill me-1"
+                      [ngClass]="selectedPlatform(platform) ? 'text-bg-danger' : 'text-bg-dark'"
+                    >
+                      {{platform}}
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
