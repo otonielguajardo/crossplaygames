@@ -13,10 +13,10 @@ export class GameService {
 
 	public getGames(): void {
 		this.httpClient
-			.get(`${import.meta.env['VITE_BASE_URL']}/api/games`)
+			.get(`${import.meta.env['VITE_BASE_URL']}/games.json`)
 			.subscribe({
-				next: ({ data }: any) => {
-					this.games$.next(data);
+				next: ({ games }: any) => {
+					this.games$.next(games);
 				},
 				error: (e) => {
 					console.error(e);
@@ -28,15 +28,11 @@ export class GameService {
 
 	public gamesFiltered(platformA: string = '', platformB: string = ''): Observable<any> {
 		return this.games$.pipe(
-			map((games: any) => {
-				let gamesFiltered = games;
-				if (platformA !== '') {
-					gamesFiltered = gamesFiltered.filter((g: any) => g.platforms.includes(platformA))
-				};
-				if (platformB !== '') {
-					gamesFiltered = gamesFiltered.filter((g: any) => g.platforms.includes(platformB))
-				};
-				return gamesFiltered;
+			map((all: any) => {
+				let games = all;
+				if (platformA !== '') games = games.filter((g: any) => g.platforms.includes(platformA));
+				if (platformB !== '') games = games.filter((g: any) => g.platforms.includes(platformB));
+				return games;
 			})
 		);
 	}
