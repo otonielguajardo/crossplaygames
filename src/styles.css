@@ -1,5 +1,10 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.css";
 
+body {
+  background-color: #1c1c27;
+  color: white;
+}
+
 ul {
   margin: 0;
   padding: 0;
@@ -9,13 +14,28 @@ li {
   list-style: none;
 }
 
+.card {
+  background-color: #222233;
+}
+
 .badge {
   cursor: pointer;
-  font-size: 10px;
+  font-size: 9px;
+}
+
+.text-bg-dark {
+  background-color: #565870 !important;
 }
 
 img.cover {
   width: 100%;
   object-fit: cover;
   height: 100%;
+}
+
+.form-control,
+.form-control:focus {
+  background-color: #222233;
+  color: white;
+  border: #1c1c27;
 }

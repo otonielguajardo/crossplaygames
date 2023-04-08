@@ -53,6 +53,7 @@ const scrapWikipedia = async () => {
 		platforms = [...new Set(platforms)];
 
 		if (platforms.length <= 1) return;
+		if(title === 'Linux') return;
 		
 		games.push({
 			title,
@@ -64,7 +65,6 @@ const scrapWikipedia = async () => {
 };
 
 const dewit = async () => {
-	const data = await loadLocalData();
 	const today = dayjs();
 
 	const games = await scrapWikipedia();
@@ -83,7 +83,7 @@ const dewit = async () => {
 		games[index].cover = igdb?.cover?.url != undefined ? `https://${igdb?.cover?.url.substring(2).replace('t_thumb', 't_cover_big')}` : null;
 
 		// set game rating
-		games[index].rating = igdb?.aggregated_rating;
+		games[index].rating = igdb?.aggregated_rating ?? 0;
 
 		// generate progress bar
 		const elapsedTime = dayjs().diff(today);
@@ -96,7 +96,7 @@ const dewit = async () => {
 
 		process.stdout.clearLine();
   	process.stdout.cursorTo(0);
-  	process.stdout.write(`[${bar}] ${Math.round(progress)}% | finishes ${remainingTimeFormatted} | ${index + 1}/${games.length} | ${game.title}`);
+  	process.stdout.write(`[${bar}] ${Math.round(progress)}% | finishes ${remainingTimeFormatted} | ${index + 1}/${games.length} | ${game.title} (${game.rating})`);
 	});
 	process.stdout.write(`\n`);
 

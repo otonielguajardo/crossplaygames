@@ -26,12 +26,28 @@ export class GameService {
 
 	public games(): Observable<any> { return this.games$; }
 
-	public gamesFiltered(platformA: string = '', platformB: string = ''): Observable<any> {
+	public gamesFiltered(platformA: string = '', platformB: string = '', sortBy: string = 'name', q: string = ''): Observable<any> {
 		return this.games$.pipe(
 			map((all: any) => {
 				let games = all;
+
+				// platforms
 				if (platformA !== '') games = games.filter((g: any) => g.platforms.includes(platformA));
 				if (platformB !== '') games = games.filter((g: any) => g.platforms.includes(platformB));
+
+				// sort
+				if (sortBy === 'name') {
+					games.sort((a: any, b: any) => {
+						if (a.title < b.title) return -1;
+						if (a.title > b.title) return 1;
+						return 0;
+					});
+				}
+				if (sortBy === 'rating') games = games.sort((a: any, b: any) => b.rating - a.rating);
+
+				// search
+				if (q !== '') games = games.filter((g: any) => g.title.toLowerCase().includes(q.toLowerCase()));
+
 				return games;
 			})
 		);

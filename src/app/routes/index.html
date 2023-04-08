@@ -4,10 +4,10 @@
       <select
         class="form-control form-control-sm"
         [(ngModel)]="queryParams.platformA"
-        (change)="applyPlatformFilter()"
+        (change)="applyFilter()"
       >
         <option *ngFor="let platform of platforms$ | async" [value]="platform">
-          {{platform}}
+          {{platform || 'All platforms'}}
         </option>
       </select>
     </div>
@@ -15,16 +15,42 @@
       <select
         class="form-control form-control-sm"
         [(ngModel)]="queryParams.platformB"
-        (change)="applyPlatformFilter()"
+        (change)="applyFilter()"
       >
         <option *ngFor="let platform of platforms$ | async" [value]="platform">
-          {{platform}}
+          {{platform || 'All platforms'}}
+        </option>
+      </select>
+    </div>
+    <div class="col-3">
+      <select
+        class="form-control form-control-sm"
+        [(ngModel)]="queryParams.sortBy"
+        (change)="applyFilter()"
+      >
+        <option *ngFor="let sort of ['name','rating']" [value]="sort">
+          by {{sort}}
         </option>
       </select>
     </div>
   </div>
-  <div class="row">
-    <div *ngFor="let game of gamesFiltered$ | async" class="col-md-6 col-12">
+  <div class="row mb-3 mt-3 gx-3">
+    <div class="col">
+      <input
+        (search)="applyFilter()"
+        (keyup)="applyFilter()"
+        [(ngModel)]="queryParams.q"
+        type="search"
+        class="form-control form-control-sm"
+        placeholder="Search titles..."
+      />
+    </div>
+  </div>
+  <div class="row gx-3">
+    <div
+      *ngFor="let game of gamesFiltered$ | async"
+      class="col-md-4 col-sm-6 col-12"
+    >
       <div class="card mb-3">
         <div class="row g-0">
           <div class="col" style="max-width: 70px">
@@ -36,7 +62,9 @@
           </div>
           <div class="col">
             <div class="card-body p-2">
-              <h5 class="card-title mb-1">{{game.title}}</h5>
+              <h5 class="card-title mb-1">
+                <span> {{game.title}} </span>
+              </h5>
               <div>
                 <ul class="d-flex flex-wrap">
                   <li
@@ -44,8 +72,8 @@
                     (click)="selectPlatform(platform)"
                   >
                     <span
-                      class="badge rounded-pill me-1"
-                      [ngClass]="selectedPlatform(platform) ? 'text-bg-danger' : 'text-bg-dark'"
+                      class="badge rounded-pill me-1 border"
+                      [ngClass]="selectedPlatform(platform) ? 'text-bg-danger border-danger' : 'text-bg-dark border-dark'"
                     >
                       {{platform}}
                     </span>

@@ -1,5 +1,5 @@
-import { GameService } from '../services/game.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { GameService } from '../services/game.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Component } from '@angular/core';
@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 const DEFAULT_QUERY_PARAMS = {
   platformA: '',
   platformB: '',
+  sortBy: 'name',
+  q: ''
 };
 
 @Component({
@@ -36,20 +38,22 @@ export default class IndexComponent {
   public ngOnInit(): void {
     this.gameService.getGames();
 
+    // listen to route change
     this.route.queryParams.subscribe((params) => {
       this.queryParams = {
         ...DEFAULT_QUERY_PARAMS,
         ...params
       };
-      this.gamesFiltered$ = this.gameService.gamesFiltered(this.queryParams.platformA, this.queryParams.platformB);
+      this.gamesFiltered$ = this.gameService.gamesFiltered(
+        this.queryParams.platformA,
+        this.queryParams.platformB,
+        this.queryParams.sortBy,
+        this.queryParams.q
+      );
     });
   }
 
-  public selectedPlatform(platform: string): boolean {
-    return this.queryParams.platformA === platform || this.queryParams.platformB === platform;
-  }
-
-  public applyPlatformFilter(): void {
+  public applyFilter(): void {
     this.router.navigate(['/'], { queryParams: this.queryParams });
   }
 
@@ -63,6 +67,10 @@ export default class IndexComponent {
     } else if (this.queryParams.platformB === '') {
       this.queryParams.platformB = platform;
     }
-    this.applyPlatformFilter();
+    this.applyFilter();
+  }
+
+  public selectedPlatform(platform: string): boolean {
+    return this.queryParams.platformA === platform || this.queryParams.platformB === platform;
   }
 }
