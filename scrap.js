@@ -29,15 +29,29 @@ const scrapWikipedia = async () => {
 
 		let platforms = '';
 		$(row).find('td').each((columnIx, column) => {
-			if (columnIx == 0) {
+			// set title
+			if (columnIx === 0) {
 				title = $(column).text().trim() != '' ? $(column).text().trim() : title;
 			}
-			if (columnIx >= 1 && columnIx <= 14) {
+
+			// add platform
+			if (columnIx >= 1 && columnIx <= 13) {
 				platforms += $(column).text().trim() + ',';
 			};
 		});
+		// discriminate platforms
+		platforms = platforms.replace(/Vita|PS3|PS4|PS5|XboxCloudGaming|WiiU|/gi, '');
+		// group PC launchers
+		platforms = platforms.replace(/Steam|Epic|Origin|MS|GFWL|GOG|Battle.net|Other/gi, 'PC');
+		// rename xbox series 
+		platforms = platforms.replace('XBSX/XBSS', 'XBS');
+		// remove empty platforms
 		platforms = platforms.replace(/\s/g, '');
 		platforms = platforms.split(',').filter((el) => { return el; });
+		// remove duplicates
+		platforms = [...new Set(platforms)];
+
+		if (platforms.length <= 1) return;
 
 		games.push({
 			title,
@@ -50,14 +64,7 @@ const scrapWikipedia = async () => {
 
 const dewit = async () => {
 	const data = await loadLocalData();
-
 	const today = dayjs();
-	// const nextFetch = dayjs(data.lastFetch).add(1, 'days');
-	// const willFetch = today.isAfter(nextFetch);
-
-	// console.log({ nextFetch: nextFetch.format(), ____today: today.format(), willFetch });
-
-	// if (!willFetch) return data.games;
 
 	const games = await scrapWikipedia();
 
@@ -69,9 +76,15 @@ const dewit = async () => {
 	const progressBarLength = 10;
 	await asyncForEach(games, async (game, index) => {
 		await sleep(wait);
-		const url = await fetchCoverUrlFromIGDB(access_token, game.title);
-		games[index].cover = url;
+		const igdb = await fetchIGDBDetails(access_token, game.title);
 
+		// set game cover
+		games[index].cover = igdb?.cover?.url != undefined ? `https://${igdb?.cover?.url.substring(2).replace('t_thumb', 't_cover_big')}` : null;
+
+		// set game rating
+		games[index].rating = igdb?.aggregated_rating;
+
+		// generate progress bar
 		const elapsedTime = dayjs().diff(today);
 		const averageTimePerIteration = elapsedTime / (index + 1);
 		const remainingTime = averageTimePerIteration * (games.length - (index + 1));
@@ -86,24 +99,23 @@ const dewit = async () => {
 	});
 	process.stdout.write(`\n`);
 
-	await saveLocalData({ lastFetch: today.getValue(), games });
+	await saveLocalData({ lastFetch: today.valueOf(), games });
 
 	return games;
 };
 
-const fetchCoverUrlFromIGDB = async (access_token, title) => {
+const fetchIGDBDetails = async (access_token, title) => {
 	const response = await fetch(`https://api.igdb.com/v4/games`, {
 		method: 'POST',
 		headers: {
 			'Client-ID': process.env['TWITCH_CLIENT'],
 			'Authorization': `Bearer ${access_token}`,
 		},
-		body: `search "${title}"; fields name, cover.url; limit 1;`
+		body: `search "${title}"; fields name, aggregated_rating, cover.url; limit 1;`
 	});
 
 	const data = await response.json();
-	const url = data[0]?.cover?.url;
-	return url != undefined ? `https://${url.substring(2).replace('t_thumb', 't_cover_big')}` : null;
+	return data[0];
 };
 
 const asyncForEach = async function (array, callback) {
