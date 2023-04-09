@@ -13,10 +13,10 @@ export class GameService {
 
 	public getGames(): void {
 		this.httpClient
-			.get(`${import.meta.env['VITE_BASE_URL']}/games.json`)
+			.get(`${import.meta.env['VITE_BASE_URL']}/api/games`)
 			.subscribe({
-				next: ({ games }: any) => {
-					this.games$.next(games);
+				next: ({ data }: any) => {
+					this.games$.next(data);
 				},
 				error: (e) => {
 					console.error(e);
