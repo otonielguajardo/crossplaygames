@@ -16,10 +16,6 @@ const DEFAULT_QUERY_PARAMS = {
 
 const metaTitle = 'Crossplay Games | Browse Games';
 const metaDescription = 'Filter by platform to easily find crossplay games that are compatible with your preferences';
-
-// Twitter
-
-
 export const routeMeta: RouteMeta = {
 	meta: [
 		{ name: 'author', content: 'Otoniel Guajardo' },

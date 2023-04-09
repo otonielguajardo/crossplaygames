@@ -8,12 +8,12 @@ dayjs.extend(relativeTime);
 const wait = 100;
 
 const loadLocalData = async () => {
-	const data = await fsPromises.readFile('./src/server/data/games.json', 'utf8');
+	const data = await fsPromises.readFile('./data/games.json', 'utf8');
 	return JSON.parse(data);
 }
 
 const saveLocalData = async (json) => {
-	await fsPromises.writeFile('./src/server/data/games.json', JSON.stringify(json));
+	await fsPromises.writeFile('./data/games.json', JSON.stringify(json));
 };
 
 const scrapWikipedia = async () => {
