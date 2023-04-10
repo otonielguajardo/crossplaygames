@@ -12,16 +12,20 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     mainFields: ['module'],
   },
-  plugins: [analog({
-    nitro: {
-      storage: {
-        'data': {
-          driver: 'fs',
-          base: './data/'
+  plugins: [
+    analog({
+      ssr: true,
+      static: true,
+      nitro: {
+        storage: {
+          'data': {
+            driver: 'fs',
+            base: './data/'
+          }
         }
       }
-    }
-  })],
+    })
+  ],
   test: {
     globals: true,
     environment: 'jsdom',
