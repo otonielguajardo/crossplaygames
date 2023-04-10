@@ -15,6 +15,9 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     analog({
       nitro: {
+        routeRules: {
+          '/api/**': { cors: true, headers: { 'access-control-allow-methods': 'GET' } },
+        },
         storage: {
           'data': {
             driver: 'fs',
