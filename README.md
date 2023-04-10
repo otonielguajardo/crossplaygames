@@ -1,4 +1,4 @@
-# CrossplayGames.xyz
+# [CrossplayGames.xyz](https://crossplaygames.xyz)
 
 Filter by platform to easily find crossplay games that are compatible with your preferences.
 
