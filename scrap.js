@@ -46,7 +46,7 @@ const scrapWikipedia = async () => {
 		platforms = platforms.replace(/Steam|Epic|Origin|MS|GFWL|GOG|Battle.net|Other/gi, 'PC');
 		// rename xbox series 
 		platforms = platforms.replace('XBSX/XBSS', 'XBS');
-		// remove empty platforms
+		// remove empty values
 		platforms = platforms.replace(/\s/g, '');
 		platforms = platforms.split(',').filter((el) => { return el; });
 		// remove duplicates
@@ -66,7 +66,6 @@ const scrapWikipedia = async () => {
 
 const dewit = async () => {
 	const today = dayjs();
-
 	const games = await scrapWikipedia();
 
 	const url = `https://id.twitch.tv/oauth2/token?client_id=${process.env['TWITCH_CLIENT']}&client_secret=${process.env['TWITCH_SECRET']}&grant_type=client_credentials`;
