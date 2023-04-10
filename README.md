@@ -4,7 +4,7 @@ Filter by platform to easily find crossplay games that are compatible with your 
 
 Made with [Analog](https://analogjs.org), the Angular meta-framework.
 
-![serve](https://user-images.githubusercontent.com/23427095/230816774-6db86b99-8f1f-445f-80ad-d945bcad5c41.png)
+![serve](/src/assets/screenshot.png)
 
 ## Setup
 
