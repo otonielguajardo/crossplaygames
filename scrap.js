@@ -5,7 +5,7 @@ const cheerio = require('cheerio');
 const dayjs = require('dayjs');
 const relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime);
-const wait = 100;
+const wait = 50;
 
 const loadLocalData = async () => {
 	const data = await fsPromises.readFile('./data/games.json', 'utf8');
@@ -81,8 +81,8 @@ const dewit = async () => {
 		// set game cover
 		games[index].cover = igdb?.cover?.url != undefined ? `https://${igdb?.cover?.url.substring(2).replace('t_thumb', 't_cover_big')}` : null;
 
-		// set game rating
-		games[index].rating = igdb?.aggregated_rating ?? 0;
+		// set game score
+		games[index].score = igdb?.aggregated_rating ?? 0;
 
 		// generate progress bar
 		const elapsedTime = dayjs().diff(today);
@@ -95,7 +95,7 @@ const dewit = async () => {
 
 		process.stdout.clearLine();
   	process.stdout.cursorTo(0);
-  	process.stdout.write(`[${bar}] ${Math.round(progress)}% | finishes ${remainingTimeFormatted} | ${index + 1}/${games.length} | ${game.title} (${game.rating})`);
+  	process.stdout.write(`[${bar}] ${Math.round(progress)}% | finishes ${remainingTimeFormatted} | ${index + 1}/${games.length} | ${game.title} (${game.score})`);
 	});
 	process.stdout.write(`\n`);
 

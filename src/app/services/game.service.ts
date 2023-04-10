@@ -43,7 +43,7 @@ export class GameService {
 						return 0;
 					});
 				}
-				if (sortBy === 'rating') games = games.sort((a: any, b: any) => b.rating - a.rating);
+				if (sortBy === 'score') games = games.sort((a: any, b: any) => b.score - a.score);
 
 				// search
 				if (q !== '') games = games.filter((g: any) => g.title.toLowerCase().includes(q.toLowerCase()));

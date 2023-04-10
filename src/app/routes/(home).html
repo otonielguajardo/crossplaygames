@@ -35,7 +35,7 @@
           [(ngModel)]="queryParams.sortBy"
           (change)="applyFilter()"
         >
-          <option *ngFor="let sort of ['name','rating']" [value]="sort">
+          <option *ngFor="let sort of ['name','score']" [value]="sort">
             by {{sort}}
           </option>
         </select>
