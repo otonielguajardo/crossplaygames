@@ -54,3 +54,26 @@ img.cover {
   top: 0;
   width: 100%;
 }
+
+.btn-primary {
+  background-color: #222233;
+  border-color: #1c1c27;
+  color: white;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus-visible,
+.btn-primary.active {
+  background-color: #565870 !important;
+  border-color: #222233 !important;
+}
+
+a,
+a:hover {
+  color: #dc3545;
+}
+
+.text-decoration-none {
+  text-decoration: none;
+}

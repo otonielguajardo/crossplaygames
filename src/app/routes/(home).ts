@@ -1,4 +1,4 @@
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GameService } from '../services/game.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -34,15 +34,16 @@ export const routeMeta: RouteMeta = {
 };
 
 @Component({
-	selector: 'app-games',
+	selector: 'app-home-page',
 	standalone: true,
 	templateUrl: './(home).html',
 	imports: [
 		CommonModule,
 		FormsModule,
+		RouterLink
 	]
 })
-export default class GamesComponent {
+export default class HomePageComponent {
 
 	public gamesFiltered$: Observable<any[]> = this.gameService.gamesFiltered();
 	public platforms$: Observable<any[]> = this.gameService.platforms();
