@@ -4,7 +4,7 @@ Filter by platform to easily find crossplay games that are compatible with your 
 
 Made with [Jigsaw](https://jigsaw.tighten.com/), [Bootstrap](https://getbootstrap.com/) and good ol vanilla javascript
 
-![serve](/src/assets/screenshot.png)
+![screenshot](/screenshot.png)
 
 ## Setup
 
@@ -18,7 +18,6 @@ Make sure to set `TWITCH_CLIENT` and `TWITCH_SECRET` env vars before executing t
 Run `npm run scrap` to update the `games.json` file located at `./data`.
 
 The script scraps the [List of video games that support cross-platform play](https://en.wikipedia.org/wiki/List_of_video_games_that_support_cross-platform_play) wikipedia page and uses the [IGDB API](https://api-docs.igdb.com/) to get each game's cover and details.
-
 
 ## Serve
 
