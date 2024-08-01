@@ -19,6 +19,8 @@ Run `npm run scrap` to update the `games.json` file located at `./data`.
 
 The script scraps the [List of video games that support cross-platform play](https://en.wikipedia.org/wiki/List_of_video_games_that_support_cross-platform_play) wikipedia page and uses the [IGDB API](https://api-docs.igdb.com/) to get each game's cover and details.
 
+https://github.com/user-attachments/assets/955a660b-6056-4d68-ae6f-90315db747e2
+
 ## Serve
 
 Run `vendor/bin/jigsaw serve` to start the server and `npm run watch` to compile the assets.
