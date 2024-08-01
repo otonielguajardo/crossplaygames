@@ -6,14 +6,15 @@ const dayjs = require('dayjs');
 const relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime);
 const wait = 50;
+const targetFile = './games.json';
 
 const loadLocalData = async () => {
-	const data = await fsPromises.readFile('./data/games.json', 'utf8');
+	const data = await fsPromises.readFile(targetFile, 'utf8');
 	return JSON.parse(data);
 }
 
 const saveLocalData = async (json) => {
-	await fsPromises.writeFile('./data/games.json', JSON.stringify(json));
+	await fsPromises.writeFile(targetFile, JSON.stringify(json));
 };
 
 const scrapWikipedia = async () => {
@@ -41,7 +42,7 @@ const scrapWikipedia = async () => {
 		});
 
 		// discriminate platforms
-		platforms = platforms.replace(/Vita|PS3|PS4|PS5|Xbox Cloud Gaming|Wii U|XB360/gi, '');
+		platforms = platforms.replace(/Vita|Xbox Cloud Gaming|Wii U|XB360/gi, '');
 		// group PC launchers
 		platforms = platforms.replace(/Steam|Epic|Origin|MS|GFWL|GOG|Battle.net|Other/gi, 'PC');
 		// rename xbox series 
