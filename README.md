@@ -15,7 +15,7 @@ Run `composer install` and `npm install` to install the application dependencies
 **Warning**
 Make sure to set `TWITCH_CLIENT` and `TWITCH_SECRET` env vars before executing the script.
 
-Run `npm run scrap` to update the `games.json` file located at `./data`.
+Run `npm run scrap` to update the `games.json` file located at root dir.
 
 The script scraps the [List of video games that support cross-platform play](https://en.wikipedia.org/wiki/List_of_video_games_that_support_cross-platform_play) wikipedia page and uses the [IGDB API](https://api-docs.igdb.com/) to get each game's cover and details.
 
